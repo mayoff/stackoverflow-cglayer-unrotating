@@ -4,8 +4,19 @@
     CGLayerRef _cgLayer;
 }
 
+- (void)willChangeStatusBarOrientation:(NSNotification *)note {
+    NSLog(@"%@", note);
+}
+
+- (void)didChangeStatusBarOrientation:(NSNotification *)note {
+    NSLog(@"%@", note);
+}
+
 - (void)awakeFromNib {
     self.contentMode = UIViewContentModeRedraw;
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(willChangeStatusBarOrientation:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didChangeStatusBarOrientation:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
 
 - (void)initCGLayer {
